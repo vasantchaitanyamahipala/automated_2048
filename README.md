@@ -1,4 +1,4 @@
-**2048 Game A* Algorithm**
+**2048 Game Automated using BFS, DFS and A Start Search Algorithm**
 
 This repository contains a Python implementation of the 2048 game with an A* algorithm. You can run the game directly or analyze its performance using the benchmark script.
 
