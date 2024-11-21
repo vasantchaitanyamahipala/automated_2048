@@ -327,7 +327,7 @@ def play_game(ai_function):
                 pygame.quit()
                 return
 
-        move = ai_function(game, depth=3)
+        move = ai_function(game, depth=4)
         game.move(move)
         move_count += 1
         print(f"Move {move_count}: {move}")

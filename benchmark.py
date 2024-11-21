@@ -1,7 +1,7 @@
 import time
 from sys import getsizeof
 from collections import defaultdict
-from src.game_2048 import bfs_ai, dfs_ai, astar_empty_tiles_ai, astar_max_tile_ai, astar_monotonicity_ai, astar_clustering_ai, astar_combination_ai,astar_adjacency_ai, Game2048
+from game_2048 import bfs_ai, dfs_ai, astar_empty_tiles_ai, astar_max_tile_ai, astar_monotonicity_ai, astar_clustering_ai, astar_combination_ai,astar_adjacency_ai, Game2048
 
 def benchmark_ai(algorithms, num_runs, depth=3):
     """
