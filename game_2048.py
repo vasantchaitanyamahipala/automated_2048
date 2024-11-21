@@ -334,14 +334,12 @@ def play_game(ai_function):
         print(f"Score: {game.score}")
 
         draw_game(game)
-        clock.tick(2)  # Limit to 2 FPS for visibility
-
+        clock.tick(2)  
     print("Game Over!")
     print(f"Final Score: {game.score}")
     print(f"Max tile: {max(max(row) for row in game.board)}")
     print(f"Total moves: {move_count}")
 
-    # Keep the window open after game over
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

@@ -1,7 +1,7 @@
 import time
 from sys import getsizeof
-from collections import defaultdict
-from game_2048 import bfs_ai, dfs_ai, astar_empty_tiles_ai, astar_max_tile_ai, astar_monotonicity_ai, astar_clustering_ai, astar_combination_ai,astar_adjacency_ai, Game2048
+from collections import defaultdict, Counter
+from game_2048 import bfs_ai, dfs_ai, astar_empty_tiles_ai, astar_max_tile_ai, astar_monotonicity_ai, astar_clustering_ai, astar_combination_ai, astar_adjacency_ai, Game2048
 
 def benchmark_ai(algorithms, num_runs, depth=3):
     """
@@ -17,7 +17,8 @@ def benchmark_ai(algorithms, num_runs, depth=3):
         "total_moves": 0,
         "total_time": 0,
         "space_usage": [],
-        "total_time_per_move": 0
+        "total_time_per_move": 0,
+        "max_tile_counts": Counter()
     })
 
     for name, ai_func in algorithms.items():
@@ -51,6 +52,10 @@ def benchmark_ai(algorithms, num_runs, depth=3):
             results[name]["total_time"] += elapsed_time
             results[name]["space_usage"].append(total_memory)
 
+            # Track the maximum tile achieved
+            max_tile = max(max(row) for row in game.board)
+            results[name]["max_tile_counts"][max_tile] += 1
+
         print(f"Completed {name}.")
 
     # Compute and display averages
@@ -61,13 +66,15 @@ def benchmark_ai(algorithms, num_runs, depth=3):
         avg_time = data["total_time"] / num_runs
         avg_space = sum(data["space_usage"]) / len(data["space_usage"])
         avg_time_per_move = data["total_time_per_move"] / data["total_moves"]
+        max_tile_counts = data["max_tile_counts"]
 
         print(f"Algorithm: {name}")
         print(f"  Average Score: {avg_score}")
         print(f"  Average Moves: {avg_moves}")
         print(f"  Average Time (s): {avg_time:.2f}")
         print(f"  Average Time per Move (s): {avg_time_per_move:.4f}")
-        print(f"  Average Space Used (bytes): {avg_space:.2f}\n")
+        print(f"  Average Space Used (bytes): {avg_space:.2f}")
+        print(f"  Max Tile Achieved Counts: {dict(max_tile_counts)}\n")
 
 if __name__ == "__main__":
     algorithms = {
@@ -77,7 +84,7 @@ if __name__ == "__main__":
         "A* (Max Tile)": astar_max_tile_ai,
         "A* (Monotonicity)": astar_monotonicity_ai,
         "A* (Clustering)": astar_clustering_ai,
-        "A% (Adjacency)" : astar_adjacency_ai,
+        "A% (Adjacency)": astar_adjacency_ai,
         "A* (Combined Heuristics)": astar_combination_ai
     }
     
